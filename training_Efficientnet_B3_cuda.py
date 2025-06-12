@@ -10,7 +10,7 @@ from PIL import Image
 from efficientnet_pytorch import EfficientNet
 
 # ---- Custom Path Configuration ----
-DATA_FOLDER = 'D:/Deeptosis'
+DATA_FOLDER = 'data/Deeptosis'
 TRAIN_CSV = os.path.join(DATA_FOLDER, 'train.csv')
 VAL_CSV = os.path.join(DATA_FOLDER, 'val.csv')
 TEST_CSV = os.path.join(DATA_FOLDER, 'test.csv')
@@ -19,7 +19,7 @@ os.makedirs(WEIGHTS_DIR, exist_ok=True)
 RESULT_NPY = 'results/E_B3_result.npy'
 os.makedirs('results', exist_ok=True)
 
-df = pd.read_csv('D:/Deeptosis/train.csv', header=None, encoding='gbk')
+df = pd.read_csv('data/Deeptosis/train.csv', header=None, encoding='gbk')
 bad = []
 for idx, row in df.iterrows():
     if not os.path.exists(row[0]):
@@ -75,7 +75,7 @@ dataloaders = {
 # ---- Model and Device Configuration ----
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = EfficientNet.from_name('efficientnet-b3', num_classes=3)
-weight_path = 'D:/Deeptosis/efficientnet-b3-5fb5a3c3.pth'
+weight_path = 'data/Deeptosis/efficientnet-b3-5fb5a3c3.pth'
 assert os.path.exists(weight_path), "Pretrained Weight File Does Not Exist, Please Download First!"
 pretrained_dict = torch.load(weight_path, map_location='cpu')
 pretrained_dict = {k: v for k, v in pretrained_dict.items() if not k.startswith('_fc.')}
