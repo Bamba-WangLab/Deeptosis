@@ -24,7 +24,23 @@ Deeptosis employs a Vision Transformer (ViT) architecture to classify cell death
 
 ## 3. Performance on the Test Set
 
-To evaluate the model's performance, the dataset was randomly split into training, validation, and test sets in an 8:1:1 ratio. The test set, although not an external dataset, was held out from training and used exclusively for evaluation. Results show that Deeptosis achieves strong generalization and class discrimination among apoptosis and pyroptosis.
+To evaluate the model's performance, the dataset was randomly split into training, validation, and test sets in an 8:1:1 ratio. The test set, although not an external dataset, was held out from training and used exclusively for evaluation.
+
+Deeptosis achieved an overall accuracy of **91.7%** on the test set, with high class-wise precision and recall. The model demonstrates strong discriminative ability across apoptosis and pyroptosis.
+
+**Key performance metrics:**
+- Accuracy: **91.7%**
+- Macro-average Precision: **91%**
+- Macro-average Recall: **92%**
+- Macro-average F1-score: **91%**
+- Multi-class Macro-AUC: **0.985**
+
+**Per-class metrics:**
+| Class       | Precision | Recall | F1-score | Support |
+|-------------|-----------|--------|----------|---------|
+| Apoptosis   | 0.90      | 0.95   | 0.92     | 672     |
+| Pyroptosis  | 0.94      | 0.92   | 0.93     | 1203    |
+| Other       | 0.90      | 0.88   | 0.89     | 782     |
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/1717d36e-ad28-4b39-ab99-90cbcb054bbe" alt="Confusion Matrix" width="400"/>
