@@ -51,7 +51,7 @@ Deeptosis achieved an overall accuracy of **91.7%** on the test set, with high c
 
 ## 4. Usage
 
-This section describes how to use the pretrained Deeptosis model to perform cell segmentation and classification on microscopy images.
+This section describes how to use the final trained Deeptosis model to perform cell segmentation and classification on microscopy images.
 
 ---
 
@@ -76,9 +76,9 @@ pip install opencv-python-headless==4.11.0.86
 
 ---
 
-### 📦 Step 2: Download pretrained model
+### 📦 Step 2: Download final trained model
 
-Download the pretrained ViT model weights from the GitHub release:
+Download the final trained ViT model weights from the GitHub release:
 
 🔗 **[best\_weight\_VitTrans.pth](https://github.com/Bamba-WangLab/Deeptosis/releases/download/v1.0-model/best_weight_VitTrans.pth)**
 
@@ -115,7 +115,7 @@ Use the following command to run the prediction:
 python predict_cells.py \
   --input_dir test \
   --use_gpu \
-  --threshold 0.6
+  --threshold 0.5
 ```
 
 ---
