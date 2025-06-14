@@ -67,13 +67,6 @@ pip install numpy==2.0.2 pillow==11.2.1 scipy==1.13.1 tqdm==4.67.1
 pip install opencv-python-headless==4.11.0.86
 ```
 
-> ✅ Tested environment:
->
-> * Python 3.9.12
-> * PyTorch 2.6.0 (CUDA 12.4)
-> * Cellpose 3.1.1.2
-> * timm 1.0.15
-
 ---
 
 ### 📦 Step 2: Download final trained model
