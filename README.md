@@ -49,3 +49,97 @@ Deeptosis achieved an overall accuracy of **91.7%** on the test set, with high c
 
 <p align="center"><em>Left: Confusion matrix showing class-wise accuracy. Right: Multi-class ROC curves with AUCs > 0.98 across all categories.</em></p>
 
+## 4. Usage
+
+This section describes how to use the pretrained Deeptosis model to perform cell segmentation and classification on microscopy images.
+
+---
+
+### 🔧 Step 1: Set up environment and install dependencies
+
+We recommend using Python 3.9 and installing the required packages via `pip`:
+
+```bash
+pip install torch==2.6.0 torchvision==0.21.0
+pip install timm==1.0.15
+pip install cellpose==3.1.1.2
+pip install numpy==2.0.2 pillow==11.2.1 scipy==1.13.1 tqdm==4.67.1
+pip install opencv-python-headless==4.11.0.86
+```
+
+> ✅ Tested environment:
+>
+> * Python 3.9.12
+> * PyTorch 2.6.0 (CUDA 12.4)
+> * Cellpose 3.1.1.2
+> * timm 1.0.15
+
+---
+
+### 📦 Step 2: Download pretrained model
+
+Download the pretrained ViT model weights from the GitHub release:
+
+🔗 **[best\_weight\_VitTrans.pth](https://github.com/Bamba-WangLab/Deeptosis/releases/download/v1.0-model/best_weight_VitTrans.pth)**
+
+Place this file in the **same folder** as the script `predict_cells.py`.
+
+---
+
+### 📂 Step 3: Download example test dataset and script
+
+You can find the test folder and script in the repository:
+
+* [`test/`](https://github.com/Bamba-WangLab/Deeptosis/tree/main/test): contains sample input images
+* [`predict_cells.py`](https://github.com/Bamba-WangLab/Deeptosis/blob/main/test/predict_cells.py): main prediction pipeline script
+
+Make sure your folder structure looks like this:
+
+```
+project_folder/
+├── best_weight_VitTrans.pth
+├── predict_cells.py
+└── test/
+    ├── image1.png
+    ├── image2.jpg
+    └── ...
+```
+
+---
+
+### ▶️ Step 4: Run the prediction script
+
+Use the following command to run the prediction:
+
+```bash
+python predict_cells.py \
+  --input_dir test \
+  --use_gpu \
+  --threshold 0.6
+```
+
+---
+
+### ✅ Output files
+
+After execution, the following results will be generated:
+
+* 📸 **Boxed images** saved in `test/boxed/` with bounding boxes:
+
+  * 🟩 Apoptosis (green)
+  * 🔴 Pyroptosis (red)
+
+* 📄 **CSV file**: `results.csv` with format:
+
+```
+filename, cell_id, x1, y1, x2, y2, pred_class, class_name, confidence
+```
+
+Example row:
+
+```
+image1.png, 12, 34, 58, 102, 130, 1, pyroptosis, 0.9821
+```
+
+---
+
