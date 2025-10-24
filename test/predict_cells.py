@@ -102,7 +102,9 @@ def main():
         writer = csv.writer(f)
         writer.writerow([
             'filename', 'cell_id', 'x1', 'y1', 'x2', 'y2',
-            'pred_class', 'class_name', 'confidence'
+            'pred_class', 'class_name', 'confidence',
+            'img_n_total', 'img_n_apoptosis', 'img_n_pyroptosis',
+            'img_ratio_apoptosis', 'img_ratio_pyroptosis'
         ])
 
     # Determine device for PyTorch
@@ -185,14 +187,24 @@ def main():
         preds = probs.argmax(axis=1)
         confs = probs[np.arange(len(preds)), preds]
 
+        total_cells = len(preds)
+        n_apop = int((preds == 0).sum())      # 0: apoptosis
+        n_pyro = int((preds == 1).sum())      # 1: pyroptosis
+        ratio_apop = (n_apop / total_cells) if total_cells > 0 else 0.0
+        ratio_pyro = (n_pyro / total_cells) if total_cells > 0 else 0.0
+
+        # Draw boxes and write CSV
         with open(args.csv_path, 'a', newline='') as f:
             writer = csv.writer(f)
             for cid, (x1, y1, x2, y2), pred, conf in zip(cell_ids, bboxes, preds, confs):
                 cls_name = CLASS_MAP.get(int(pred), str(pred))
                 writer.writerow([
                     basename, cid, x1, y1, x2, y2,
-                    int(pred), cls_name, f"{conf:.4f}"
+                    int(pred), cls_name, f"{conf:.4f}",
+                    total_cells, n_apop, n_pyro,
+                    f"{ratio_apop:.4f}", f"{ratio_pyro:.4f}"
                 ])
+                # Draw boxes only for classes 0 and 1 above threshold
                 if pred in [0, 1] and conf >= args.threshold:
                     color = (0, 255, 0) if pred == 0 else (0, 0, 255)
                     cv2.rectangle(img_cv, (x1, y1), (x2, y2), color, 2)
